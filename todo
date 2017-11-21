@@ -1,0 +1,9 @@
+Add function to handle input. If inputted char is incorrect, add to error count, add target character to app state array. If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
+
+Add way of getting new strings. Or for now array of strings in app which are selected from randomly.
+
+Add button to start (and stop) session, linked to timer.
+
+Add visual feedback and floating div to highlight next char (or just green font for typed input and red marker when incorrect.)
+
+Fix issue of word wrap (displayed text wraps, inputted chars don't wrap until word is above certain number of chars.)

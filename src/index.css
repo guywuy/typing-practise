@@ -1,0 +1,31 @@
+*{
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica', sans-serif;
+}
+.App{
+  max-width: 1000px;
+  margin:0 auto;
+}
+.TypingContainer{
+  max-width: 800px;
+  background: lightgray;
+  border-radius: 6px;
+  border: 1px solid darkgray;
+  height: 800px;
+  position: relative;
+}
+textarea {
+  resize: none;
+  width: 90%;
+  height: 90%;
+  background: none;
+  position: absolute;
+  top:5%;
+  left:5%;
+  font-size: 1.2em;
+  line-height: 1.2;
+}
