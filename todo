@@ -1,4 +1,4 @@
-Add function to handle input. If inputted char is incorrect, add to error count, add target character to app state array. If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
+If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
 
 Add way of getting new strings. Or for now array of strings in app which are selected from randomly.
 

@@ -18,8 +18,7 @@ body {
   height: 800px;
   position: relative;
 }
-textarea {
-  resize: none;
+.TypingArea {
   width: 90%;
   height: 90%;
   background: none;
@@ -28,4 +27,14 @@ textarea {
   left:5%;
   font-size: 1.2em;
   line-height: 1.2;
+}
+textarea {
+  padding: 0;
+  color: transparent;
+}
+#background-text-display {
+  color: #666;
+}
+.red {
+  color: #F00;
 }
