@@ -7,3 +7,7 @@ Add button to start (and stop) session, linked to timer.
 Add visual feedback and floating div to highlight next char (or just green font for typed input and red marker when incorrect.)
 
 Fix issue of word wrap (displayed text wraps, inputted chars don't wrap until word is above certain number of chars.)
+
+Don't let progress until correct char is typed?
+
+Number of 'correct' chars increases on backspace and re enter of previously entered char.

@@ -7,16 +7,21 @@ body {
   font-family: 'Helvetica', sans-serif;
 }
 .App{
-  max-width: 1000px;
+  max-width: 1200px;
   margin:0 auto;
 }
+
+.main-container {
+  display: flex;
+}
 .TypingContainer{
-  max-width: 800px;
-  background: lightgray;
+  /* max-width: 800px; */
+  background: rgb(255, 249, 195);
   border-radius: 6px;
   border: 1px solid darkgray;
   height: 800px;
   position: relative;
+  flex-basis: 80%;
 }
 .TypingArea {
   width: 90%;
@@ -37,4 +42,17 @@ textarea {
 }
 .red {
   color: #F00;
+}
+
+.InfoContainer{
+  flex-basis: 20%;
+  border-radius: 6px;
+  padding: 5%;
+  
+}
+
+@media (max-width: 700px){
+  .main-container {
+    flex-direction: column;
+  }
 }
