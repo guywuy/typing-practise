@@ -6,7 +6,8 @@ class App extends Component {
   constructor(){
     super();
     this.state = {
-      'stringToType': 'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
+      'stringToType': '',
+      'inProgress' : false,
       'currentPosition' : 0,
       'successCount' : 0,
       'errorCount' : 0,
@@ -17,6 +18,7 @@ class App extends Component {
 
     this.validateTyping = this.validateTyping.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
+    this.startRound = this.startRound.bind(this);
   }
 
   validateTyping(input){
@@ -55,6 +57,30 @@ class App extends Component {
     }
   }
 
+  resetState() {
+    this.setState({
+      'stringToType': '',
+      'inProgress' : false,
+      'currentPosition' : 0,
+      'successCount' : 0,
+      'errorCount' : 0,
+      'errorChars' : [],
+      'timeTaken' : 0,
+      'overlayCharacters': []
+    })
+  }
+
+  startRound(){
+    this.setState({
+      'stringToType': this.generateString(),
+      'inProgress' : true
+    });
+  }
+
+  generateString(){
+    return 'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.' 
+  }
+
   render() {
     return (
       <div className="App">
@@ -62,7 +88,7 @@ class App extends Component {
           <h1 className="App-title">Practise your typing!</h1>
         </header>
         <section className="main-container">
-          <TypingContainer stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters}/>
+          <TypingContainer inProgress={this.state.inProgress} stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters} startRound={this.startRound} />
           <InfoContainer successCount={this.state.successCount} errorCount={this.state.errorCount} errorChars={this.state.errorChars} timeElapsed={this.state.timeTaken} />
         </section>
       </div>

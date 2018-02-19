@@ -47,8 +47,32 @@ textarea {
 .InfoContainer{
   flex-basis: 20%;
   border-radius: 6px;
-  padding: 5%;
-  
+  padding: 5%; 
+}
+
+.button--start {
+  border: 2px solid olive;
+  padding: 2rem 3rem;
+  background: none;
+  font-size: 2rem;
+  color: olive;
+  margin: 2rem;
+  cursor: pointer;
+  position: absolute;
+}
+.flashing {
+  color: green;
+  text-decoration: underline;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @media (max-width: 700px){
