@@ -8,14 +8,15 @@ class App extends Component {
     this.state = {
       'stringToType': '',
       'inProgress' : false,
-      'currentPosition' : 1,
+      'currentPosition' : 0,
       'remainingCount' : 0,
       'successCount' : 0,
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
       'timeElapsed' : 0,
-      'overlayCharacters': []
+      'overlayCharacters': [],
+      'previousInput': ''
     }
 
     this.validateTyping = this.validateTyping.bind(this);
@@ -33,26 +34,38 @@ class App extends Component {
   }
 
   validateTyping(input){
+    // compare input to previous input - if the same then return
+    if (input === this.state.previousInput) return;
+    console.log(this.state.currentPosition, 'current position');
+    
     let length = input.length;
-    let lastChar = input[length-1];
-    let targetChar = this.state.stringToType[length-1];
+    
+    let lastChar = input[this.state.currentPosition];
+    let targetChar = this.state.stringToType[this.state.currentPosition];
+    console.log(targetChar, 'targetChar');
     let characterLog = this.state.overlayCharacters;
     let errorChars = this.state.errorChars;
     let errorCountTotal = this.state.errorCountTotal;
     let remainingCount = this.state.stringToType.length - length;
 
-    if (targetChar === lastChar) {
-      // Assign corresponding position in characterLog with 'correct'
-      characterLog[length] = 'correct';
-    } else {
-      errorCountTotal = this.state.errorCountTotal+1;
-      errorChars = [...errorChars, targetChar];
-      // Assign corresponding position in characterLog with 'incorrect'
-      characterLog[length] = 'incorrect';
+        
+    // Ensure we are not revalidating old input if user has deleted characters... by comparing length of input to previous input.
+    if (length > this.state.previousInput.length){
+      // If the last inputted character matches the corresponding character in the stringToType
+      if (targetChar === lastChar) {
+        // Assign corresponding position in characterLog with 'correct'
+        characterLog[length] = 'correct';
+      } else {
+        errorCountTotal = this.state.errorCountTotal+1;
+        errorChars = [...errorChars, targetChar];
+        // Assign corresponding position in characterLog with 'incorrect'
+        characterLog[length] = 'incorrect';
+      }
     }
 
     let successCount = this.countInstances(characterLog, 'correct');
     let errorCountCurrent = characterLog.length - successCount - 1;
+    let previousInput = input;
 
     this.setState({
         overlayCharacters: characterLog,
@@ -62,6 +75,7 @@ class App extends Component {
         errorCountTotal,
         currentPosition: length,
         remainingCount,
+        previousInput
       }
     );
   }
@@ -78,7 +92,8 @@ class App extends Component {
   handleBackspace(){
     if (this.state.currentPosition>0){
       this.setState({
-        overlayCharacters: this.state.overlayCharacters.slice(0, this.state.currentPosition)
+        'overlayCharacters': this.state.overlayCharacters.slice(0, this.state.currentPosition),
+        'currentPosition' : this.state.currentPosition - 1
       })
     }
   }
@@ -89,14 +104,15 @@ class App extends Component {
     this.setState({
       'stringToType': '',
       'inProgress' : false,
-      'currentPosition' : 1,
+      'currentPosition' : 0,
       'remainingCount' : 0,
       'successCount' : 0,
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
       'timeElapsed' : 0,
-      'overlayCharacters': []
+      'overlayCharacters' : [],
+      'previousInput' : ''
     })
   }
 
@@ -109,6 +125,10 @@ class App extends Component {
       remainingCount,
       'inProgress' : true
     });
+  }
+
+  endRound(){
+
   }
 
   generateString(){
