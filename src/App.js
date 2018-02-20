@@ -14,13 +14,14 @@ class App extends Component {
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
-      'timeTaken' : 0,
+      'timeElapsed' : 0,
       'overlayCharacters': []
     }
 
     this.validateTyping = this.validateTyping.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.startRound = this.startRound.bind(this);
+    this.tick = this.tick.bind(this);
 
     this.strings = [
       "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
@@ -51,7 +52,6 @@ class App extends Component {
     }
 
     let successCount = this.countInstances(characterLog, 'correct');
-    console.log(characterLog, 'charlog')
     let errorCountCurrent = characterLog.length - successCount - 1;
 
     this.setState({
@@ -61,10 +61,17 @@ class App extends Component {
         errorCountCurrent,
         errorCountTotal,
         currentPosition: length,
-        remainingCount
+        remainingCount,
       }
     );
   }
+
+  tick(){
+    this.setState({
+      timeElapsed: this.state.timeElapsed += 1
+    })
+  }
+
 
   handleBackspace(){
     if (this.state.currentPosition>0){
@@ -75,6 +82,8 @@ class App extends Component {
   }
 
   resetState() {
+    clearInterval(this.interval);
+    
     this.setState({
       'stringToType': '',
       'inProgress' : false,
@@ -84,7 +93,7 @@ class App extends Component {
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
-      'timeTaken' : 0,
+      'timeElapsed' : 0,
       'overlayCharacters': []
     })
   }
@@ -92,6 +101,7 @@ class App extends Component {
   startRound(){
     let stringToType = this.generateString();
     let remainingCount = stringToType.length;
+    this.interval = setInterval(this.tick, 100);
     this.setState({
       stringToType,
       remainingCount,
@@ -120,7 +130,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Practise your typing!</h1>
+          <h1 className="App-title">Typing practise makes fingers nimble</h1>
         </header>
         <section className="main-container">
           <TypingContainer inProgress={this.state.inProgress} stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters} startRound={this.startRound} />
@@ -129,7 +139,7 @@ class App extends Component {
           errorCountCurrent={this.state.errorCountCurrent} 
           errorCountTotal={this.state.errorCountTotal} 
           errorChars={this.state.errorChars} 
-          timeElapsed={this.state.timeTaken} />
+          timeElapsed={this.state.timeElapsed} />
         </section>
       </div>
     );

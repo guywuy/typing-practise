@@ -41,7 +41,14 @@ class TypingContainer extends Component {
         }
         
         {this.props.inProgress &&
-        <textarea className="TypingArea" id='user-text-display' autoFocus onChange={this.handleChange} onKeyDown={this.handleKeyDown}></textarea>
+        <textarea className="TypingArea" 
+        id='user-text-display' 
+        autoFocus 
+        autoCorrect="off" 
+        autoCapitalize="off"
+        spellCheck="false" 
+        onChange={this.handleChange} 
+        onKeyDown={this.handleKeyDown}></textarea>
         }
         {!this.props.inProgress && <button className="button--start" onClick={this.props.startRound}>Start!</button>}
       </div>

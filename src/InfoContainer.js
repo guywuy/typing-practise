@@ -26,7 +26,7 @@ const InfoContainer = ({
       return b[1] - a[1];
     });
     for (let char of sortable){
-      outputString += `<li key=${char[0]}>${char[0]}: ${char[1]}</li>`
+      outputString += `<li key=${char[0]}>${char[0]} : <span class="align-right">${char[1]}</span></li>`
     }
     
     return {__html: outputString};
@@ -34,12 +34,13 @@ const InfoContainer = ({
 
   return (
     <div className="InfoContainer">
-      <p>Remaining: {remainingCount}</p>
-      <p>Correct: {successCount}</p>
-      <p>Current Errors: {errorCountCurrent}</p>
-      <p>Total Errors: {errorCountTotal}</p>
+      <p>Remaining: <strong>{remainingCount}</strong></p>
+      <p>Correct: <strong>{successCount}</strong></p>
+      <p>Current Errors: <strong>{errorCountCurrent}</strong></p>
+      <p>Total Errors: <strong>{errorCountTotal}</strong></p>
+      <p>Time: <strong>{timeElapsed}</strong></p>
       <p> Error chars: </p>
-      <ul dangerouslySetInnerHTML={formattedErrorChars()}></ul>
+      <ul className="error-chars-container" dangerouslySetInnerHTML={formattedErrorChars()}></ul>
     </div>
   )
 }

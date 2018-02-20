@@ -21,7 +21,7 @@ body {
   border: 1px solid darkgray;
   height: 800px;
   position: relative;
-  flex-basis: 80%;
+  flex-basis: 78%;
 }
 .TypingArea {
   width: 90%;
@@ -46,9 +46,9 @@ textarea {
 }
 
 .InfoContainer{
-  flex-basis: 20%;
+  flex-basis: 22%;
   border-radius: 6px;
-  padding: 5%; 
+  padding: 2.5%; 
 }
 
 .button--start {
@@ -69,6 +69,15 @@ textarea {
   /* display: inline-block; */
   /* box-shadow: 0px 2px green; */
 }
+.error-chars-container {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.align-right{
+  text-align: right;
+}
+
 
 @keyframes flash {
   from {
