@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TypingContainer from './TypingContainer';
 import InfoContainer from './InfoContainer';
+import Summary from './Summary';
+
 
 class App extends Component {
   constructor(){
@@ -15,26 +17,30 @@ class App extends Component {
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
+      'sortedErrorChars' : [],
       'timeElapsed' : 0,
       'overlayCharacters': [],
-      'previousInput': ''
+      'previousInput': '',
+      'wordsPerMinute': 0
     }
 
     this.validateTyping = this.validateTyping.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.startRound = this.startRound.bind(this);
     this.tick = this.tick.bind(this);
+    this.sortArray = this.sortArray.bind(this);
+    this.getWordsPerMinute = this.getWordsPerMinute.bind(this);
 
-    this.strings = [
-      "Satie was a colourful figure"
-    ]
     // this.strings = [
-    //   "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
-    //   'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
-    //   "The Road to Infinity is a collection of seventeen scientific essays by Isaac Asimov. It was the fourteenth of a series of books collecting Asimov's science essays from The Magazine of Fantasy and Science Fiction. It also included a list of all of Asimov's essays in that magazine up to 1979. It was first published by Doubleday & Company in 1979.",
-    //   "Logic is the formal science of using reason and is considered a branch of both philosophy and mathematics. Logic investigates and classifies the structure of statements and arguments, both through the study of formal systems of inference and the study of arguments in natural language. The scope of logic can therefore be very large, ranging from core topics such as the study of fallacies and paradoxes, to specialized analyses of reasoning such as probability, correct reasoning, and arguments involving causality. One of the aims of logic is to identify the correct (or valid) and incorrect (or fallacious) inferences. Logicians study the criteria for the evaluation of arguments.",
-    //   "The Indo-Pacific finless porpoise (Neophocaena phocaenoides), or finless porpoise, is one of seven porpoise species. Most of the population has been found around the Korean peninsula in the Yellow and East China Seas, although a freshwater population is found around Jiuduansha near Shanghai at the mouth of China's Yangtze River. Genetic studies indicate that the finless porpoise is the most basal living member of the porpoise family."
+    //   "Satie was a colourful figure"
     // ]
+    this.strings = [
+      "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
+      'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
+      "The Road to Infinity is a collection of seventeen scientific essays by Isaac Asimov. It was the fourteenth of a series of books collecting Asimov's science essays from The Magazine of Fantasy and Science Fiction. It also included a list of all of Asimov's essays in that magazine up to 1979. It was first published by Doubleday & Company in 1979.",
+      "Logic is the formal science of using reason and is considered a branch of both philosophy and mathematics. Logic investigates and classifies the structure of statements and arguments, both through the study of formal systems of inference and the study of arguments in natural language. The scope of logic can therefore be very large, ranging from core topics such as the study of fallacies and paradoxes, to specialized analyses of reasoning such as probability, correct reasoning, and arguments involving causality. One of the aims of logic is to identify the correct (or valid) and incorrect (or fallacious) inferences. Logicians study the criteria for the evaluation of arguments.",
+      "The Indo-Pacific finless porpoise (Neophocaena phocaenoides), or finless porpoise, is one of seven porpoise species. Most of the population has been found around the Korean peninsula in the Yellow and East China Seas, although a freshwater population is found around Jiuduansha near Shanghai at the mouth of China's Yangtze River. Genetic studies indicate that the finless porpoise is the most basal living member of the porpoise family."
+    ]
   }
 
   validateTyping(input){
@@ -70,6 +76,8 @@ class App extends Component {
       }
     }
 
+    let sortedErrorChars = this.sortArray(errorChars);
+    
     let successCount = this.countInstances(characterLog, 'correct');
     let errorCountCurrent = characterLog.length - successCount - 1;
     let previousInput = input;
@@ -77,12 +85,14 @@ class App extends Component {
     this.setState({
         overlayCharacters: characterLog,
         errorChars,
+        sortedErrorChars,
         successCount,
         errorCountCurrent,
         errorCountTotal,
         currentPosition: length,
         remainingCount,
-        previousInput
+        previousInput,
+        "wordsPerMinute" : this.getWordsPerMinute()
       }
     );
   }
@@ -95,6 +105,37 @@ class App extends Component {
     })
   }
 
+  // Take an array of characters, count instances of each and return sorted array of [char, count] pairs
+  sortArray(arr){
+    if (arr.length === 0) return [];
+
+    //Firstly make object, and add properties for each char, incrementing value of each key when it appears
+    let count = {};
+    arr.forEach( char => {
+      count[char] = (count[char] || 0) + 1;
+    } );
+    
+    let sortable = [];
+    
+    //Push each character into array to be able to sort
+    for ( let charVal in count ){
+      sortable.push([charVal, count[charVal]]);
+    }
+    // Sort array by values
+    sortable.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+
+    return sortable;
+  }
+
+  getWordsPerMinute(){
+    let wordCount = this.state.previousInput.split(' ').length-1;
+
+    if (wordCount === 0) return 0;
+
+    return (wordCount/(this.state.timeElapsed/600)).toFixed(2);
+  }
 
   handleBackspace(){
     if (this.state.currentPosition>0){
@@ -104,6 +145,7 @@ class App extends Component {
       })
     }
   }
+
 
   resetState() {
     clearInterval(this.interval);
@@ -117,10 +159,12 @@ class App extends Component {
       'errorCountCurrent' : 0,
       'errorCountTotal' : 0,
       'errorChars' : [],
+      'sortedErrorChars' : [],
       'timeElapsed' : 0,
       'overlayCharacters' : [],
       'previousInput' : '',
-      'finished' : false
+      'finished' : false,
+      'wordsPerMinute': 0
     })
   }
 
@@ -182,10 +226,22 @@ class App extends Component {
           remainingCount={this.state.remainingCount} 
           errorCountCurrent={this.state.errorCountCurrent} 
           errorCountTotal={this.state.errorCountTotal} 
-          errorChars={this.state.errorChars} 
+          errorChars={this.state.sortedErrorChars} 
           timeElapsed={this.state.timeElapsed}
-          wordCount={this.state.previousInput.split(' ').length-1} 
+          wordsPerMinute={this.state.wordsPerMinute} 
+          finished={this.state.finished} 
           />
+
+          {this.state.finished && 
+          <Summary 
+          successCount={this.state.successCount} 
+          errorCountCurrent={this.state.errorCountCurrent} 
+          errorCountTotal={this.state.errorCountTotal} 
+          errorChars={this.state.sortedErrorChars} 
+          timeElapsed={this.state.timeElapsed}
+          wordsPerMinute={this.state.wordsPerMinute}
+          />}
+
         </section>
       </div>
     );

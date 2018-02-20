@@ -1,14 +1,12 @@
 import React from 'react';
 
-const InfoContainer = ({
-  remainingCount,
+const Summary = ({
   successCount,
   errorCountCurrent,
   errorCountTotal,
   errorChars,
   timeElapsed,
-  wordsPerMinute,
-  finished
+  wordsPerMinute
 }) => {
 
   let formattedErrorChars = () => {
@@ -18,17 +16,17 @@ const InfoContainer = ({
   }
 
   return (
-    <div className="info-container">
-      <p>Remaining: <strong>{remainingCount}</strong></p>
-      <p>Correct: <strong>{successCount}</strong></p>
-      <p>Current Errors: <strong>{errorCountCurrent}</strong></p>
+    <div className="summary-container">
+      <p>Correct characters: <strong>{successCount}</strong></p>
+      <p>Incorrect characters: <strong>{errorCountCurrent}</strong></p>
       <p>Total Errors: <strong>{errorCountTotal}</strong></p>
-      <p>Time: <strong>{(timeElapsed/10).toFixed(1)}</strong>s</p>
+      <p>Time taken: <strong>{(timeElapsed/10).toFixed(1)}</strong>s</p>
       <p>WPM: <strong>{wordsPerMinute}</strong></p>
       <p> Error chars: </p>
       <ul className="error-chars-container">{formattedErrorChars()}</ul>
+
     </div>
   )
 }
 
-export default InfoContainer;
+export default Summary;
