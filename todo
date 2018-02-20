@@ -1,26 +1,16 @@
 If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
 
-Add way of getting new strings. Or for now array of strings in app which are selected from randomly.
-
 Add button to stop session, linked to timer.
-
-Fix issue of word wrap (displayed text wraps, inputted chars don't wrap until word is above certain number of chars.)
 
 Ability to choose a category you are interested in, and query wikipedia for a bit of text from an article tagged with that category! Make it interesting!
 
-Calculate number of *current* correct characters, incorrect characters, and characters remaining (in addition to keeping track of all error characters).
-
-Work out time taken and have high penalty for error characters remaining, lower penalty for number of corrected errors.
-
-calculate - need length of stringtotype, currentposition, array of overlay chars 
-remaining = stringlength - curent pos 
-currentcorrectcount = num of overlay 'corrects'
-currenterrorcount = num of overlay 'incorrects'
-
-
-Sort error characters by frequency for display.
+On round finish
+    - Work out time taken and have high penalty for error characters remaining, lower penalty for number of corrected errors. Give score based on time taken, length of string and number of errors.
+    - Show score with button to start new round.
 
 Might need to amend with client js to work out cursor position. Currently using the mouse to change position, or arrow keys, breaks it.
 
 
 Input onChange is called (and therefore inputvalidated) even on backspace, so for example if you backspace and the new final char is incorrect, error count total increases.
+
+Prevent browser displaying 'spellcheck' red lines

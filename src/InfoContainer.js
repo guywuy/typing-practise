@@ -15,10 +15,18 @@ const InfoContainer = ({
       count[char] = (count[char] || 0) + 1;
     } );
     
+    let sortable = [];
     let outputString = '';
     
+    //Push each character into array to be able to sort
     for ( let charVal in count ){
-      outputString += `<li key=${charVal}>${charVal}: ${count[charVal]}</li>`
+      sortable.push([charVal, count[charVal]]);
+    }
+    sortable.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+    for (let char of sortable){
+      outputString += `<li key=${char[0]}>${char[0]}: ${char[1]}</li>`
     }
     
     return {__html: outputString};
@@ -30,7 +38,7 @@ const InfoContainer = ({
       <p>Correct: {successCount}</p>
       <p>Current Errors: {errorCountCurrent}</p>
       <p>Total Errors: {errorCountTotal}</p>
-      <p> Error chars </p>
+      <p> Error chars: </p>
       <ul dangerouslySetInnerHTML={formattedErrorChars()}></ul>
     </div>
   )
