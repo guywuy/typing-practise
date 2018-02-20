@@ -6,8 +6,15 @@ const InfoContainer = ({
   errorCountCurrent,
   errorCountTotal,
   errorChars,
-  timeElapsed
+  timeElapsed,
+  wordCount
 }) => {
+
+  let wordsPerMinute = () => {
+    if (wordCount === 0) return 0;
+
+    return (wordCount/(timeElapsed/600)).toFixed(2);
+  }
 
   let formattedErrorChars = () => {
 
@@ -39,6 +46,8 @@ const InfoContainer = ({
       <p>Current Errors: <strong>{errorCountCurrent}</strong></p>
       <p>Total Errors: <strong>{errorCountTotal}</strong></p>
       <p>Time: <strong>{timeElapsed}</strong></p>
+      <p>Words: <strong>{wordCount}</strong></p>
+      <p>WPM: <strong>{wordsPerMinute()}</strong></p>
       <p> Error chars: </p>
       <ul className="error-chars-container">{formattedErrorChars()}</ul>
     </div>

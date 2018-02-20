@@ -1,5 +1,6 @@
 :root {
   --medium-grey: #666;
+  --jazzy-shadows: 2px 2px orange, -2px -2px cyan;
 }
 *{
   box-sizing: border-box;
@@ -21,7 +22,6 @@ body {
   display: flex;
 }
 .TypingContainer{
-  /* max-width: 800px; */
   background: rgb(255, 249, 195);
   border-radius: 6px;
   border: 1px solid darkgray;
@@ -58,7 +58,7 @@ textarea {
   flex-basis: 22%;
   border-radius: 6px;
   padding: 2.5%; 
-  color: var(--medium-grey);  
+  color: var(--medium-grey);
 }
 strong {
   color: black;
@@ -69,12 +69,13 @@ strong {
   padding: 2rem 3rem;
   background: none;
   font-size: 2rem;
-  color: olive;
   margin: 2rem;
   cursor: pointer;
   position: absolute;
   left: 2rem;
   top: 2rem;
+  text-shadow: var(--jazzy-shadows);
+  box-shadow: var(--jazzy-shadows);
 }
 .flashing {
   color: green;

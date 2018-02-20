@@ -128,7 +128,7 @@ class App extends Component {
   }
 
   endRound(){
-
+    clearInterval(this.interval);
   }
 
   generateString(){
@@ -161,7 +161,8 @@ class App extends Component {
           errorCountCurrent={this.state.errorCountCurrent} 
           errorCountTotal={this.state.errorCountTotal} 
           errorChars={this.state.errorChars} 
-          timeElapsed={this.state.timeElapsed} />
+          timeElapsed={this.state.timeElapsed}
+          wordCount={this.state.previousInput.split(' ').length-1} />
         </section>
       </div>
     );
