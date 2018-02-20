@@ -208,7 +208,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="app__header">
-          <h1 className="app__title">Typing practise makes fingers nimble!</h1>
+          <h1 className="app__title">Typing practise keeps fingers nimble!</h1>
         </header>
         <section className="main-container">
           <TypingContainer 

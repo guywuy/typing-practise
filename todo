@@ -7,13 +7,10 @@ On round finish
     - Work out time taken and have high penalty for error characters remaining, lower penalty for number of corrected errors. Give score based on time taken, length of string and number of errors.
     - Show score with button to start new round.
 
-
-
-
 ISSUES
-    Prevent browser displaying 'spellcheck' red lines
-    Input onChange is called (and therefore inputvalidated) even on backspace, so for example if you backspace and the new final char is incorrect, error count total increases.
-    Might need to use client js to work out cursor position. Currently using the mouse to change position, or arrow keys, breaks it.
+    Might need to use js to work out cursor position / selection object, and enforce that it's at the end. Or find out where click is and update state's currentPosition.
+
+    typing container onClick prevent default doesn't work
 
 
 TO IMPROVE

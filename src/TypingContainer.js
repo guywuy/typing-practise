@@ -6,6 +6,7 @@ class TypingContainer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(ev){
@@ -14,7 +15,12 @@ class TypingContainer extends Component {
   handleKeyDown(ev){
     if(ev.which===8) {
       this.props.handleBackspace();
+    } else if (ev.which===37 || ev.which===39){
+      ev.preventDefault();
     }
+  }
+  handleClick(ev){
+    ev.preventDefault();
   }
 
   formatOverlayChars(){
@@ -56,7 +62,8 @@ class TypingContainer extends Component {
         autoCapitalize="off"
         spellCheck="false" 
         onChange={this.handleChange} 
-        onKeyDown={this.handleKeyDown}></textarea>
+        onKeyDown={this.handleKeyDown}
+        onClick={this.handleClick}></textarea>
         }
         {!this.props.inProgress && !this.props.finished && <button className="button--start" onClick={this.props.startRound}>Start!</button>}
 
