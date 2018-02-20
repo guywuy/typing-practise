@@ -9,8 +9,10 @@ class App extends Component {
       'stringToType': '',
       'inProgress' : false,
       'currentPosition' : 0,
+      'remainingCount' : 0,
       'successCount' : 0,
-      'errorCount' : 0,
+      'errorCountCurrent' : 0,
+      'errorCountTotal' : 0,
       'errorChars' : [],
       'timeTaken' : 0,
       'overlayCharacters': []
@@ -19,6 +21,14 @@ class App extends Component {
     this.validateTyping = this.validateTyping.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.startRound = this.startRound.bind(this);
+
+    this.strings = [
+      "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
+      'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
+      "The Road to Infinity is a collection of seventeen scientific essays by Isaac Asimov. It was the fourteenth of a series of books collecting Asimov's science essays from The Magazine of Fantasy and Science Fiction. It also included a list of all of Asimov's essays in that magazine up to 1979. It was first published by Doubleday & Company in 1979.",
+      "Logic is the formal science of using reason and is considered a branch of both philosophy and mathematics. Logic investigates and classifies the structure of statements and arguments, both through the study of formal systems of inference and the study of arguments in natural language. The scope of logic can therefore be very large, ranging from core topics such as the study of fallacies and paradoxes, to specialized analyses of reasoning such as probability, correct reasoning, and arguments involving causality. One of the aims of logic is to identify the correct (or valid) and incorrect (or fallacious) inferences. Logicians study the criteria for the evaluation of arguments.",
+      "The Indo-Pacific finless porpoise (Neophocaena phocaenoides), or finless porpoise, is one of seven porpoise species. Most of the population has been found around the Korean peninsula in the Yellow and East China Seas, although a freshwater population is found around Jiuduansha near Shanghai at the mouth of China's Yangtze River. Genetic studies indicate that the finless porpoise is the most basal living member of the porpoise family."
+    ]
   }
 
   validateTyping(input){
@@ -26,27 +36,35 @@ class App extends Component {
     let lastChar = input[length-1];
     let targetChar = this.state.stringToType[length-1];
     let characterLog = this.state.overlayCharacters;
+    let errorChars = this.state.errorChars;
+    let errorCountTotal = this.state.errorCountTotal;
+    let remainingCount = this.state.stringToType.length - length;
 
     if (targetChar === lastChar) {
       console.log('Correct');
+      // Assign corresponding position in characterLog with 'correct'
       characterLog[length] = 'correct';
-      this.setState({
-          successCount: this.state.successCount+1,        
-          overlayCharacters: characterLog,
-          currentPosition: length
-        }
-      );
     } else {
       console.log('incorrect')
+      errorCountTotal = this.state.errorCountTotal+1;
+      // Assign corresponding position in characterLog with 'incorrect'
       characterLog[length] = 'incorrect';
-      this.setState({
-        overlayCharacters: characterLog,
-        errorCount: this.state.errorCount+1,
-        errorChars: [...this.state.errorChars, targetChar],
-        currentPosition: length
-        }
-      );
     }
+
+    let successCount = this.countInstances(characterLog, 'correct');
+    console.log(characterLog, 'charlog')
+    let errorCountCurrent = characterLog.length - successCount - 1;
+
+    this.setState({
+        overlayCharacters: characterLog,
+        errorChars,
+        successCount,
+        errorCountCurrent,
+        errorCountTotal,
+        currentPosition: length,
+        remainingCount
+      }
+    );
   }
 
   handleBackspace(){
@@ -62,8 +80,10 @@ class App extends Component {
       'stringToType': '',
       'inProgress' : false,
       'currentPosition' : 0,
+      'remainingCount' : 0,
       'successCount' : 0,
-      'errorCount' : 0,
+      'errorCountCurrent' : 0,
+      'errorCountTotal' : 0,
       'errorChars' : [],
       'timeTaken' : 0,
       'overlayCharacters': []
@@ -78,7 +98,21 @@ class App extends Component {
   }
 
   generateString(){
-    return 'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.' 
+    // Return a random string from the strings stored in the App
+    return this.strings[Math.floor(Math.random()*this.strings.length)];
+  }
+
+  // Return the number of times that a target value appears in an array
+  countInstances(arr, target){
+    if (arr.length===0) return 0;
+    return arr.reduce( (acc, currentVal) => {
+      console.log(acc, 'acc')
+      if (currentVal === target) {
+        return acc += 1;
+      } else {
+        return acc;
+      }
+    }, 0)
   }
 
   render() {
@@ -89,7 +123,12 @@ class App extends Component {
         </header>
         <section className="main-container">
           <TypingContainer inProgress={this.state.inProgress} stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters} startRound={this.startRound} />
-          <InfoContainer successCount={this.state.successCount} errorCount={this.state.errorCount} errorChars={this.state.errorChars} timeElapsed={this.state.timeTaken} />
+          <InfoContainer successCount={this.state.successCount} 
+          remainingCount={this.state.remainingCount} 
+          errorCountCurrent={this.state.errorCountCurrent} 
+          errorCountTotal={this.state.errorCountTotal} 
+          errorChars={this.state.errorChars} 
+          timeElapsed={this.state.timeTaken} />
         </section>
       </div>
     );

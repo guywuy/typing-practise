@@ -12,7 +12,6 @@ class TypingContainer extends Component {
     this.props.validateTyping(ev.target.value);
   }
   handleKeyDown(ev){
-    console.log(ev.which)
     if(ev.which===8) {
       this.props.handleBackspace();
     }

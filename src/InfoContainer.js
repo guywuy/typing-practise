@@ -1,8 +1,10 @@
 import React from 'react';
 
 const InfoContainer = ({
+  remainingCount,
   successCount,
-  errorCount,
+  errorCountCurrent,
+  errorCountTotal,
   errorChars,
   timeElapsed
 }) => {
@@ -24,8 +26,10 @@ const InfoContainer = ({
 
   return (
     <div className="InfoContainer">
+      <p>Remaining: {remainingCount}</p>
       <p>Correct: {successCount}</p>
-      <p>Errors: {errorCount}</p>
+      <p>Current Errors: {errorCountCurrent}</p>
+      <p>Total Errors: {errorCountTotal}</p>
       <p> Error chars </p>
       <ul dangerouslySetInnerHTML={formattedErrorChars()}></ul>
     </div>
