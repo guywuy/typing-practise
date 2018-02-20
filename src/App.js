@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       'stringToType': '',
       'inProgress' : false,
-      'currentPosition' : 0,
+      'currentPosition' : 1,
       'remainingCount' : 0,
       'successCount' : 0,
       'errorCountCurrent' : 0,
@@ -41,12 +41,11 @@ class App extends Component {
     let remainingCount = this.state.stringToType.length - length;
 
     if (targetChar === lastChar) {
-      console.log('Correct');
       // Assign corresponding position in characterLog with 'correct'
       characterLog[length] = 'correct';
     } else {
-      console.log('incorrect')
       errorCountTotal = this.state.errorCountTotal+1;
+      errorChars = [...errorChars, targetChar];
       // Assign corresponding position in characterLog with 'incorrect'
       characterLog[length] = 'incorrect';
     }
@@ -79,7 +78,7 @@ class App extends Component {
     this.setState({
       'stringToType': '',
       'inProgress' : false,
-      'currentPosition' : 0,
+      'currentPosition' : 1,
       'remainingCount' : 0,
       'successCount' : 0,
       'errorCountCurrent' : 0,
@@ -91,8 +90,11 @@ class App extends Component {
   }
 
   startRound(){
+    let stringToType = this.generateString();
+    let remainingCount = stringToType.length;
     this.setState({
-      'stringToType': this.generateString(),
+      stringToType,
+      remainingCount,
       'inProgress' : true
     });
   }
@@ -106,7 +108,6 @@ class App extends Component {
   countInstances(arr, target){
     if (arr.length===0) return 0;
     return arr.reduce( (acc, currentVal) => {
-      console.log(acc, 'acc')
       if (currentVal === target) {
         return acc += 1;
       } else {

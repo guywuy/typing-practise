@@ -25,7 +25,9 @@ class TypingContainer extends Component {
       this.props.stringToType[i-1] :
       '<span class="red">' + this.props.stringToType[i-1] + '</span>'}`
     })
-    outputString.length > 0 ? outputString += `<span class="flashing">${this.props.stringToType[log.length-1]}</span>` : outputString += '';
+    outputString.length > 0 ? 
+      outputString += `<span class="flashing">${this.props.stringToType[log.length-1]}</span>` : 
+      outputString += `<span class="flashing">${this.props.stringToType[0]}</span>`;
     return {__html: outputString};
   }
 
@@ -33,7 +35,11 @@ class TypingContainer extends Component {
     return (
       <div className="TypingContainer">
         <div className="TypingArea" id='background-text-display' disabled>{this.props.stringToType}</div>
+
+        {this.props.inProgress &&
         <div className="TypingArea" id='text-overlay' dangerouslySetInnerHTML={this.formatOverlayChars()}></div>
+        }
+        
         {this.props.inProgress &&
         <textarea className="TypingArea" id='user-text-display' autoFocus onChange={this.handleChange} onKeyDown={this.handleKeyDown}></textarea>
         }
