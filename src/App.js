@@ -8,6 +8,7 @@ class App extends Component {
     this.state = {
       'stringToType': '',
       'inProgress' : false,
+      'finished' : false,
       'currentPosition' : 0,
       'remainingCount' : 0,
       'successCount' : 0,
@@ -25,24 +26,30 @@ class App extends Component {
     this.tick = this.tick.bind(this);
 
     this.strings = [
-      "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
-      'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
-      "The Road to Infinity is a collection of seventeen scientific essays by Isaac Asimov. It was the fourteenth of a series of books collecting Asimov's science essays from The Magazine of Fantasy and Science Fiction. It also included a list of all of Asimov's essays in that magazine up to 1979. It was first published by Doubleday & Company in 1979.",
-      "Logic is the formal science of using reason and is considered a branch of both philosophy and mathematics. Logic investigates and classifies the structure of statements and arguments, both through the study of formal systems of inference and the study of arguments in natural language. The scope of logic can therefore be very large, ranging from core topics such as the study of fallacies and paradoxes, to specialized analyses of reasoning such as probability, correct reasoning, and arguments involving causality. One of the aims of logic is to identify the correct (or valid) and incorrect (or fallacious) inferences. Logicians study the criteria for the evaluation of arguments.",
-      "The Indo-Pacific finless porpoise (Neophocaena phocaenoides), or finless porpoise, is one of seven porpoise species. Most of the population has been found around the Korean peninsula in the Yellow and East China Seas, although a freshwater population is found around Jiuduansha near Shanghai at the mouth of China's Yangtze River. Genetic studies indicate that the finless porpoise is the most basal living member of the porpoise family."
+      "Satie was a colourful figure"
     ]
+    // this.strings = [
+    //   "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
+    //   'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
+    //   "The Road to Infinity is a collection of seventeen scientific essays by Isaac Asimov. It was the fourteenth of a series of books collecting Asimov's science essays from The Magazine of Fantasy and Science Fiction. It also included a list of all of Asimov's essays in that magazine up to 1979. It was first published by Doubleday & Company in 1979.",
+    //   "Logic is the formal science of using reason and is considered a branch of both philosophy and mathematics. Logic investigates and classifies the structure of statements and arguments, both through the study of formal systems of inference and the study of arguments in natural language. The scope of logic can therefore be very large, ranging from core topics such as the study of fallacies and paradoxes, to specialized analyses of reasoning such as probability, correct reasoning, and arguments involving causality. One of the aims of logic is to identify the correct (or valid) and incorrect (or fallacious) inferences. Logicians study the criteria for the evaluation of arguments.",
+    //   "The Indo-Pacific finless porpoise (Neophocaena phocaenoides), or finless porpoise, is one of seven porpoise species. Most of the population has been found around the Korean peninsula in the Yellow and East China Seas, although a freshwater population is found around Jiuduansha near Shanghai at the mouth of China's Yangtze River. Genetic studies indicate that the finless porpoise is the most basal living member of the porpoise family."
+    // ]
   }
 
   validateTyping(input){
     // compare input to previous input - if the same then return
     if (input === this.state.previousInput) return;
-    console.log(this.state.currentPosition, 'current position');
-    
+
+    if (this.state.currentPosition >= this.state.stringToType.length){
+      this.endRound();
+      return;
+    }
+
     let length = input.length;
     
     let lastChar = input[this.state.currentPosition];
     let targetChar = this.state.stringToType[this.state.currentPosition];
-    console.log(targetChar, 'targetChar');
     let characterLog = this.state.overlayCharacters;
     let errorChars = this.state.errorChars;
     let errorCountTotal = this.state.errorCountTotal;
@@ -112,7 +119,8 @@ class App extends Component {
       'errorChars' : [],
       'timeElapsed' : 0,
       'overlayCharacters' : [],
-      'previousInput' : ''
+      'previousInput' : '',
+      'finished' : false
     })
   }
 
@@ -129,6 +137,10 @@ class App extends Component {
 
   endRound(){
     clearInterval(this.interval);
+    this.setState({
+      'inProgress' : false,
+      'finished' : true
+    });
   }
 
   generateString(){
@@ -155,14 +167,25 @@ class App extends Component {
           <h1 className="app__title">Typing practise makes fingers nimble!</h1>
         </header>
         <section className="main-container">
-          <TypingContainer inProgress={this.state.inProgress} stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters} startRound={this.startRound} />
-          <InfoContainer successCount={this.state.successCount} 
+          <TypingContainer 
+          inProgress={this.state.inProgress} 
+          finished={this.state.finished} 
+          stringToType={this.state.stringToType} 
+          validateTyping={this.validateTyping} 
+          handleBackspace={this.handleBackspace} 
+          overlayCharacters={this.state.overlayCharacters} 
+          startRound={this.startRound} 
+          />
+
+          <InfoContainer 
+          successCount={this.state.successCount} 
           remainingCount={this.state.remainingCount} 
           errorCountCurrent={this.state.errorCountCurrent} 
           errorCountTotal={this.state.errorCountTotal} 
           errorChars={this.state.errorChars} 
           timeElapsed={this.state.timeElapsed}
-          wordCount={this.state.previousInput.split(' ').length-1} />
+          wordCount={this.state.previousInput.split(' ').length-1} 
+          />
         </section>
       </div>
     );

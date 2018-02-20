@@ -25,9 +25,13 @@ class TypingContainer extends Component {
       this.props.stringToType[i-1] :
       '<span class="red">' + this.props.stringToType[i-1] + '</span>'}`
     })
-    outputString.length > 0 ? 
-      outputString += `<span class="flashing">${this.props.stringToType[log.length-1]}</span>` : 
-      outputString += `<span class="flashing">${this.props.stringToType[0]}</span>`;
+    if (log.length >= this.props.stringToType.length){
+      outputString += "";
+    } else if (outputString.length > 0) {
+      outputString += `<span class="flashing">${this.props.stringToType[log.length-1]}</span>`;
+    } else {
+      outputString += `<span class="flashing">${this.props.stringToType[0]}</span>`;      
+    }
     return {__html: outputString};
   }
 
@@ -38,6 +42,10 @@ class TypingContainer extends Component {
 
         {this.props.inProgress &&
         <div className="TypingArea" id='text-overlay' dangerouslySetInnerHTML={this.formatOverlayChars()}></div>
+        }
+
+        {this.props.finished &&
+        <div className="TypingArea finished" id='text-overlay' dangerouslySetInnerHTML={this.formatOverlayChars()}></div>
         }
         
         {this.props.inProgress &&
@@ -50,7 +58,8 @@ class TypingContainer extends Component {
         onChange={this.handleChange} 
         onKeyDown={this.handleKeyDown}></textarea>
         }
-        {!this.props.inProgress && <button className="button--start" onClick={this.props.startRound}>Start!</button>}
+        {!this.props.inProgress && !this.props.finished && <button className="button--start" onClick={this.props.startRound}>Start!</button>}
+
       </div>
     );
   }

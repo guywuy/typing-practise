@@ -1,6 +1,7 @@
 :root {
   --medium-grey: #666;
   --jazzy-shadows: 2px 2px orange, -2px -2px cyan;
+  --jazzy-shadows--inverse: 4px 4px cyan, -4px -4px orange;
 }
 *{
   box-sizing: border-box;
@@ -22,7 +23,7 @@ body {
   display: flex;
 }
 .TypingContainer{
-  background: rgb(255, 249, 195);
+  background: rgb(232, 218, 87);
   border-radius: 6px;
   border: 1px solid darkgray;
   height: 800px;
@@ -48,6 +49,7 @@ textarea {
 }
 #background-text-display {
   color: var(--medium-grey);
+  background: #FFF8;  
 }
 .red {
   color: red;
@@ -76,11 +78,20 @@ strong {
   top: 2rem;
   text-shadow: var(--jazzy-shadows);
   box-shadow: var(--jazzy-shadows);
+  transition: all 0.3s;
+}
+.button--start:hover {
+  text-shadow: var(--jazzy-shadows--inverse);
+  box-shadow: var(--jazzy-shadows--inverse);
 }
 .flashing {
   color: green;
   text-decoration: underline;
   animation: flash 1s infinite;
+}
+.finished .flashing {
+  color: none;
+  animation: none;
 }
 .error-chars-container {
   max-height: 300px;

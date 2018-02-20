@@ -45,7 +45,7 @@ const InfoContainer = ({
       <p>Correct: <strong>{successCount}</strong></p>
       <p>Current Errors: <strong>{errorCountCurrent}</strong></p>
       <p>Total Errors: <strong>{errorCountTotal}</strong></p>
-      <p>Time: <strong>{timeElapsed}</strong></p>
+      <p>Time: <strong>{(timeElapsed/10).toFixed(1)}</strong>s</p>
       <p>Words: <strong>{wordCount}</strong></p>
       <p>WPM: <strong>{wordsPerMinute()}</strong></p>
       <p> Error chars: </p>
