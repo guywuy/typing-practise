@@ -67,8 +67,10 @@ class App extends Component {
   }
 
   tick(){
-    this.setState({
-      timeElapsed: this.state.timeElapsed += 1
+    this.setState( (prevState) => {
+      return {
+        timeElapsed: prevState.timeElapsed += 1
+      }
     })
   }
 

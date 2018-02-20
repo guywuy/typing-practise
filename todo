@@ -1,16 +1,21 @@
-If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
-
-Add button to stop session, linked to timer.
-
-Ability to choose a category you are interested in, and query wikipedia for a bit of text from an article tagged with that category! Make it interesting!
+TODO
+    Add button to stop session, linked to timer.
+    If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
+    Ability to choose a category you are interested in, and query wikipedia for a bit of text from an article tagged with that category! Make it interesting!
+    Work out words per second/characters per second.
 
 On round finish
     - Work out time taken and have high penalty for error characters remaining, lower penalty for number of corrected errors. Give score based on time taken, length of string and number of errors.
     - Show score with button to start new round.
 
-Might need to amend with client js to work out cursor position. Currently using the mouse to change position, or arrow keys, breaks it.
 
 
-Input onChange is called (and therefore inputvalidated) even on backspace, so for example if you backspace and the new final char is incorrect, error count total increases.
 
-Prevent browser displaying 'spellcheck' red lines
+ISSUES
+    Prevent browser displaying 'spellcheck' red lines
+    Input onChange is called (and therefore inputvalidated) even on backspace, so for example if you backspace and the new final char is incorrect, error count total increases.
+    Might need to use client js to work out cursor position. Currently using the mouse to change position, or arrow keys, breaks it.
+
+
+TO IMPROVE
+    Find better way of counting and formatting error characters than current way of converting from array of characters to obj of {char : count} back to array to sort
