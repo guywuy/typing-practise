@@ -33,7 +33,7 @@ const InfoContainer = ({
   }
 
   return (
-    <div className="InfoContainer">
+    <div className="info-container">
       <p>Remaining: <strong>{remainingCount}</strong></p>
       <p>Correct: <strong>{successCount}</strong></p>
       <p>Current Errors: <strong>{errorCountCurrent}</strong></p>

@@ -2,6 +2,7 @@ TODO
     Add button to stop session, linked to timer.
     If char is the final char of the target string, call finishFunction, calculate time taken, display feedback to user.
     Work out words per second/characters per second.
+    Add countdown from three when start button is pressed
 
 On round finish
     - Work out time taken and have high penalty for error characters remaining, lower penalty for number of corrected errors. Give score based on time taken, length of string and number of errors.

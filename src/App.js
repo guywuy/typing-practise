@@ -151,8 +151,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Typing practise makes fingers nimble</h1>
+        <header className="app__header">
+          <h1 className="app__title">Typing practise makes fingers nimble!</h1>
         </header>
         <section className="main-container">
           <TypingContainer inProgress={this.state.inProgress} stringToType={this.state.stringToType} validateTyping={this.validateTyping} handleBackspace={this.handleBackspace} overlayCharacters={this.state.overlayCharacters} startRound={this.startRound} />

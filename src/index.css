@@ -1,3 +1,6 @@
+:root {
+  --medium-grey: #666;
+}
 *{
   box-sizing: border-box;
 }
@@ -9,6 +12,9 @@ body {
 .App{
   max-width: 1200px;
   margin:0 auto;
+}
+.app__title {
+  color: var(--medium-grey);
 }
 
 .main-container {
@@ -30,25 +36,32 @@ body {
   position: absolute;
   top:5%;
   left:5%;
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.2;
+  box-shadow: 0px 0px 20px #4444;
+  padding: 2rem;
 }
 textarea {
   padding: 0;
   color: transparent;
+  padding: 2rem;
 }
 #background-text-display {
-  color: #666;
+  color: var(--medium-grey);
 }
 .red {
-  color: #F00;
+  color: red;
   border-bottom: 2px dotted red;
 }
 
-.InfoContainer{
+.info-container{
   flex-basis: 22%;
   border-radius: 6px;
   padding: 2.5%; 
+  color: var(--medium-grey);  
+}
+strong {
+  color: black;
 }
 
 .button--start {
@@ -60,14 +73,13 @@ textarea {
   margin: 2rem;
   cursor: pointer;
   position: absolute;
+  left: 2rem;
+  top: 2rem;
 }
 .flashing {
   color: green;
   text-decoration: underline;
   animation: flash 1s infinite;
-  /* width: 10px; */
-  /* display: inline-block; */
-  /* box-shadow: 0px 2px green; */
 }
 .error-chars-container {
   max-height: 300px;
