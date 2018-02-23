@@ -27,13 +27,13 @@ class App extends Component {
     this.validateTyping = this.validateTyping.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.startRound = this.startRound.bind(this);
+    this.resetRound = this.resetRound.bind(this);
     this.tick = this.tick.bind(this);
     this.sortArray = this.sortArray.bind(this);
     this.getWordsPerMinute = this.getWordsPerMinute.bind(this);
 
-    // this.strings = [
-    //   "Satie was a colourful figure"
-    // ]
+    this.teststring = "Satie was a colourful figure";
+
     this.strings = [
       "Satie was a colourful figure in the early 20th-century Parisian avant-garde. His work was a precursor to later artistic movements such as minimalism, Surrealism, repetitive music, and the Theatre of the Absurd.",
       'Salvator Mundi is a painting of Christ as Salvator Mundi (Latin: Saviour of The World) by Leonardo da Vinci, dated to c. 1500. The painting shows Jesus, in Renaissance dress, giving a benediction with his raised right hand and crossed fingers while holding a transparent crystal orb in his left hand. Around 20 other versions of the work are known, by students and followers of Leonardo, and some chalk preparatory drawings are held in the Royal Collection.',
@@ -47,7 +47,7 @@ class App extends Component {
     // compare input to previous input - if the same then return
     if (input === this.state.previousInput) return;
 
-    if (this.state.currentPosition >= this.state.stringToType.length){
+    if (this.state.currentPosition >= this.state.stringToType.length - 1){
       this.endRound();
       return;
     }
@@ -147,7 +147,7 @@ class App extends Component {
   }
 
 
-  resetState() {
+  resetRound() {
     clearInterval(this.interval);
     
     this.setState({
@@ -190,6 +190,7 @@ class App extends Component {
   generateString(){
     // Return a random string from the strings stored in the App
     return this.strings[Math.floor(Math.random()*this.strings.length)];
+    // return this.teststring;
   }
 
   // Return the number of times that a target value appears in an array
@@ -211,15 +212,29 @@ class App extends Component {
           <h1 className="app__title">Typing practise keeps fingers nimble!</h1>
         </header>
         <section className="main-container">
-          <TypingContainer 
-          inProgress={this.state.inProgress} 
-          finished={this.state.finished} 
-          stringToType={this.state.stringToType} 
-          validateTyping={this.validateTyping} 
-          handleBackspace={this.handleBackspace} 
-          overlayCharacters={this.state.overlayCharacters} 
-          startRound={this.startRound} 
-          />
+          <div className="container__left">
+            <TypingContainer 
+            inProgress={this.state.inProgress} 
+            finished={this.state.finished} 
+            stringToType={this.state.stringToType} 
+            validateTyping={this.validateTyping} 
+            handleBackspace={this.handleBackspace} 
+            overlayCharacters={this.state.overlayCharacters} 
+            startRound={this.startRound} 
+            />
+
+            {this.state.finished && 
+            <Summary 
+            successCount={this.state.successCount} 
+            errorCountCurrent={this.state.errorCountCurrent} 
+            errorCountTotal={this.state.errorCountTotal} 
+            errorChars={this.state.sortedErrorChars} 
+            totalChars={this.state.stringToType.length}
+            timeElapsed={this.state.timeElapsed}
+            wordsPerMinute={this.state.wordsPerMinute}
+            resetRound={this.resetRound}
+            />}
+          </div>
 
           <InfoContainer 
           successCount={this.state.successCount} 
@@ -232,15 +247,7 @@ class App extends Component {
           finished={this.state.finished} 
           />
 
-          {this.state.finished && 
-          <Summary 
-          successCount={this.state.successCount} 
-          errorCountCurrent={this.state.errorCountCurrent} 
-          errorCountTotal={this.state.errorCountTotal} 
-          errorChars={this.state.sortedErrorChars} 
-          timeElapsed={this.state.timeElapsed}
-          wordsPerMinute={this.state.wordsPerMinute}
-          />}
+
 
         </section>
       </div>

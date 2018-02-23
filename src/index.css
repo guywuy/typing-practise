@@ -1,10 +1,13 @@
 :root {
   --medium-grey: #666;
   --jazzy-shadows: 2px 2px orange, -2px -2px cyan;
-  --jazzy-shadows--inverse: 4px 4px cyan, -4px -4px orange;
+  --jazzy-shadows--inverse: -3px -3px orange, 3px 3px cyan;
 }
 *{
   box-sizing: border-box;
+}
+h1, h1, h3, h4, h5 {
+  margin: 0;
 }
 body {
   margin: 0;
@@ -17,18 +20,22 @@ body {
 }
 .app__title {
   color: var(--medium-grey);
+  margin: 1rem 0;
 }
 
 .main-container {
   display: flex;
 }
+.container__left{
+  position: relative;
+  flex-basis: 78%;
+}
 .TypingContainer{
-  background: rgb(232, 218, 87);
+  background: cornsilk;
   border-radius: 6px;
   border: 1px solid darkgray;
   height: 800px;
   position: relative;
-  flex-basis: 78%;
 }
 .TypingArea {
   width: 90%;
@@ -65,22 +72,39 @@ textarea {
 strong {
   color: black;
 }
+.summary-container {
+  position: absolute;
+  background: #ffefbb;
+  padding: 2rem;
+  width: 50%;
+  left: 25%;
+  top: 5%;
+  height: 90%;
+  border: 8px solid darkorchid;
+  overflow-y: auto;
+  box-shadow: 0 0 40px 0px;
+}
 
-.button--start {
-  border: 2px solid olive;
+.button {
+  border: 2px solid fuchsia;
   padding: 2rem 3rem;
   background: none;
   font-size: 2rem;
   margin: 2rem;
   cursor: pointer;
-  position: absolute;
   left: 2rem;
   top: 2rem;
   text-shadow: var(--jazzy-shadows);
   box-shadow: var(--jazzy-shadows);
   transition: all 0.3s;
 }
-.button--start:hover {
+.button--start {
+  position: absolute;
+}
+.button--reset {
+  border: 2px solid red;
+}
+.button:hover {
   text-shadow: var(--jazzy-shadows--inverse);
   box-shadow: var(--jazzy-shadows--inverse);
 }
@@ -95,13 +119,26 @@ strong {
 }
 .error-chars-container {
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  column-count: 2;
+}
+.summary-container .error-chars-container {
+  max-height: 150px;
+}
+ul {
+  list-style: none;
 }
 
 .align-right{
   text-align: right;
 }
 
+.small {
+  font-size: 90%;
+}
+.x-small {
+  font-size: 70%;
+}
 
 @keyframes flash {
   from {

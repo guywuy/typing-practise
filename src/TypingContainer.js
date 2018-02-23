@@ -65,7 +65,7 @@ class TypingContainer extends Component {
         onKeyDown={this.handleKeyDown}
         onClick={this.handleClick}></textarea>
         }
-        {!this.props.inProgress && !this.props.finished && <button className="button--start" onClick={this.props.startRound}>Start!</button>}
+        {!this.props.inProgress && !this.props.finished && <button className="button button--start" autoFocus onClick={this.props.startRound}>Start!</button>}
 
       </div>
     );
